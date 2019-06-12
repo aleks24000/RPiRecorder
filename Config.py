@@ -7,9 +7,9 @@
 #}
 
 AUDIO_CONFIG = {
-    'rate': 44100,
+    'rate': 48000,
     'chunk': 2,
-    'record_device': 0,
+    'record_device': 1,
     'play_device': 1,
     'channel': 2
 }

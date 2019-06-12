@@ -7,7 +7,7 @@ import glob
 
 proc = None
 sessionFile = None
-NB_MAX_FLAC = 5
+NB_MAX_FLAC = 10
 
 def findFileName():
     files = glob.glob("*.flac")
@@ -26,6 +26,9 @@ def findFileName():
         return "session-"+str(inc)
     else:
         return "session-1"
+
+def startFromGui():
+    start(False)
 
 def start( debug ):
     print ("Start gb")
@@ -52,6 +55,9 @@ def start_rec( debug ):
         print("Mock Recording")
         os.system("touch "+sessionFile+".flac")
 
+def stopFromGui():
+    stop_rec(False)
+
 def stop_rec(debug):
     print("Stop!")
     if debug is False:
@@ -59,11 +65,11 @@ def stop_rec(debug):
         command_line = "kill " + str(proc.pid)
         os.system(command_line)
         if AUDIO_CONFIG['channel'] == 2:
-            command_line = "sox "+sessionFile+".wav -c 1 "+sessionFile+".wav"
+            command_line = "sox "+sessionFile+".wav -c 1 "+sessionFile+"_mono.wav"
             os.system(command_line)
         else:
             command_line = "cp "+sessionFile+".wav "+sessionFile+"_mono.wav"
             os.system(command_line)
-        os.system("flac "+sessionFile+"_mono.wav -f "+sessionFile+".flac")
+        os.system("flac "+sessionFile+"_mono.wav -f -o "+sessionFile+".flac")
         os.system("rm session*.wav")
 
